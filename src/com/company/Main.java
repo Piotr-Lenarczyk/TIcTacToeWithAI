@@ -394,38 +394,48 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        initGame();
-        printGrid();
-        while(!analyzeWinCondition()) {
-            if(moves % 2 == 0) {
-                if ("user".equalsIgnoreCase(players[0])) {
-                    makeAMove('X');
-                } else if ("easy".equalsIgnoreCase(players[0])) {
-                    System.out.println("Making move level \"easy\"");
-                    easyAIMove('X');
-                } else if ("medium".equalsIgnoreCase(players[0])) {
-                    System.out.println("Making move level \"medium\"");
-                    mediumAIMove('X');
-                } else if ("hard".equalsIgnoreCase(players[0])) {
-                    System.out.println("Making move level \"hard\"");
-                    hardAIMove('X');
-                }
-            } else {
-                if ("user".equalsIgnoreCase(players[1])) {
-                    makeAMove('O');
-                } else if ("easy".equalsIgnoreCase(players[1])) {
-                    System.out.println("Making move level \"easy\"");
-                    easyAIMove('O');
-                } else if ("medium".equalsIgnoreCase(players[1])) {
-                    System.out.println("Making move level \"medium\"");
-                    mediumAIMove('O');
-                } else if ("hard".equalsIgnoreCase(players[1])) {
-                    System.out.println("Making move level \"hard\"");
-                    hardAIMove('O');
-                }
-            }
+        boolean repeatPrompt;
+        do {
+            repeatPrompt = false;
+            initGame();
             printGrid();
-            moves++;
-        }
+            while (!analyzeWinCondition()) {
+                if (moves % 2 == 0) {
+                    if ("user".equalsIgnoreCase(players[0])) {
+                        makeAMove('X');
+                    } else if ("easy".equalsIgnoreCase(players[0])) {
+                        System.out.println("Making move level \"easy\"");
+                        easyAIMove('X');
+                    } else if ("medium".equalsIgnoreCase(players[0])) {
+                        System.out.println("Making move level \"medium\"");
+                        mediumAIMove('X');
+                    } else if ("hard".equalsIgnoreCase(players[0])) {
+                        System.out.println("Making move level \"hard\"");
+                        hardAIMove('X');
+                    } else {
+                        repeatPrompt = true;
+                        break;
+                    }
+                } else {
+                    if ("user".equalsIgnoreCase(players[1])) {
+                        makeAMove('O');
+                    } else if ("easy".equalsIgnoreCase(players[1])) {
+                        System.out.println("Making move level \"easy\"");
+                        easyAIMove('O');
+                    } else if ("medium".equalsIgnoreCase(players[1])) {
+                        System.out.println("Making move level \"medium\"");
+                        mediumAIMove('O');
+                    } else if ("hard".equalsIgnoreCase(players[1])) {
+                        System.out.println("Making move level \"hard\"");
+                        hardAIMove('O');
+                    } else {
+                        repeatPrompt = true;
+                        break;
+                    }
+                }
+                printGrid();
+                moves++;
+            }
+        } while (repeatPrompt);
     }
 }
