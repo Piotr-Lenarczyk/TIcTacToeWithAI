@@ -13,6 +13,8 @@ public class MediumAI extends AI {
         int ownRowOccurrences;
         int opponentRowOccurrences;
         char opponent;
+        
+        //Declare opponent
         if (player == 'X') {
             opponent = 'O';
         } else  {
@@ -26,6 +28,8 @@ public class MediumAI extends AI {
                     ownRowOccurrences++;
                 }
             }
+            
+            //Check for vertical win
             if (getGridElement(this.grid, i) == player && getGridElement(this.grid, i + 3) == player && getGridElement(this.grid, i + 6) == ' ') {
                 setGridElement(this.grid, i * 6, player);
                 return;
@@ -36,6 +40,8 @@ public class MediumAI extends AI {
                 setGridElement(this.grid, i, player);
                 return;
             }
+            
+            //Check for horizontal win
             if (ownRowOccurrences == 2) {
                 for (int j = 0; j < 3; j++) {
                     if (getGridElement(this.grid, i * 3 + j) == ' ') {
@@ -45,6 +51,8 @@ public class MediumAI extends AI {
                 }
             }
         }
+        
+        //Check for diagonal win
         if (getGridElement(this.grid, 0) == player && getGridElement(this.grid, 4) == player && getGridElement(this.grid, 8) == ' ') {
             setGridElement(this.grid, 8, player);
             return;
@@ -69,6 +77,8 @@ public class MediumAI extends AI {
                     opponentRowOccurrences++;
                 }
             }
+            
+            //Prevent enemy from getting a vertical win
             if (getGridElement(this.grid, i) == player && getGridElement(this.grid, i + 3) == opponent && getGridElement(this.grid, i + 6) == ' ') {
                 setGridElement(this.grid, i * 6, player);
                 return;
@@ -79,6 +89,8 @@ public class MediumAI extends AI {
                 setGridElement(this.grid, i, player);
                 return;
             }
+            
+            //Prevent enemy from getting a horizontal win
             if (opponentRowOccurrences == 2) {
                 for (int j = 0; j < 3; j++) {
                     if (getGridElement(this.grid, i * 3 + j) == ' ') {
@@ -88,6 +100,8 @@ public class MediumAI extends AI {
                 }
             }
         }
+        
+        //Prevent enemy from getting a diagonal win
         if (getGridElement(this.grid, 0) == opponent && getGridElement(this.grid, 4) == opponent && getGridElement(this.grid, 8) == ' ') {
             setGridElement(this.grid, 8, player);
             return;
