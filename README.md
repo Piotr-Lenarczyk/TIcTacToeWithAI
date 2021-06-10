@@ -16,7 +16,7 @@ exit
   <dd>Easy AI, which will make random moves.</dd>
   <dt>medium</dt>
   <dd>Medium AI. Medium AI will check if it can win in the current turn. If so, it will make the necessary move to win. If not, it will check if the enemy can win in their next turn. If so, AI will block that move. Otherwise it will make a random move.<br>
-<b>It should be noted that medium AI, despite of making a blocking move may not be able to prevent the opponent from winning.</b></dd>
+<b>It should be noted that medium AI, despite making a blocking move may not be able to prevent the opponent from winning.</b></dd>
   <dt>hard</dt>
   <dd>Hard AI uses <a href="https://en.wikipedia.org/wiki/Minimax" title="Minimax algorithm">Minimax algorithm</a> to ensure it can never lose - it will play to win or force a draw.</dd>
 </dl>
