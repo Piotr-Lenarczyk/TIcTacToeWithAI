@@ -96,6 +96,8 @@ public class Main {
         for (int i = 0; i < 3; i++) {
             xRowOccurrences = 0;
             oRowOccurrences = 0;
+            
+            //Check for horizontal wins
             for (int j = 0; j < 3; j++) {
                 if (characters[i * 3 + j] == 'X') {
                     xRowOccurrences++;
@@ -110,12 +112,16 @@ public class Main {
                     oWin = true;
                 }
             }
+            
+            //Check for vertical win
             if (characters[i] == 'X' && characters[i + 3] == 'X' && characters[i + 6] == 'X') {
                 xWin = true;
             } else if (characters[i] == 'O' && characters[i + 3] == 'O' && characters[i + 6] == 'O') {
                 oWin = true;
             }
         }
+        
+        //Check for diagonal win
         if (characters[0] == 'X' && characters[4] == 'X' && characters[8] == 'X') {
             xWin = true;
         } else if (characters[2] == 'X' && characters[4] == 'X' && characters[6] == 'X') {
@@ -125,6 +131,8 @@ public class Main {
         } else if (characters[2] == 'O' && characters[4] == 'O' && characters[6] == 'O') {
             oWin = true;
         }
+        
+        //Print gamestate
         if (xWin) {
             System.out.println("X wins");
             return true;
@@ -145,12 +153,18 @@ public class Main {
             System.out.print("Enter the coordinates: ");
             String line = scanner.nextLine();
             String[] coordinate = line.split(" ");
+            
+            //If input parameters are not numbers
             if (coordinate.length == 1 || (!isInteger(coordinate[0], 10) && !isInteger(coordinate[1], 10))) {
                 System.out.println("You should enter numbers!");
+                
+            //If coordinates are different from <1; 3> range
             } else if (Integer.parseInt(coordinate[0]) < 1 || Integer.parseInt(coordinate[0]) > 3 || Integer.parseInt(coordinate[1]) < 1 || Integer.parseInt(coordinate[1]) > 3) {
                 System.out.println("Coordinates should be from 1 to 3!");
             } else {
                 int index = 3 * (Integer.parseInt(coordinate[0]) - 1) + (Integer.parseInt(coordinate[1]) - 1);
+                
+                //If cell is already taken
                 if (characters[index] != ' ') {
                     System.out.println("This cell is occupied! Choose another one!");
                 } else {
@@ -166,8 +180,12 @@ public class Main {
         }
     }
 
+    
+    //Function passed to mediumAI
     public static void easyAIMove(char player) {
         LinkedList<Integer> linkedList = new LinkedList<>();
+        
+        //Add each empty cell to the list
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (characters[i * 3 + j] != 'X' && characters[i * 3 + j] != 'O') {
@@ -175,6 +193,8 @@ public class Main {
                 }
             }
         }
+        
+        //Choose random empty cell
         Random random = new Random();
         int index = random.nextInt(linkedList.size());
         characters[linkedList.get(index)] = player;
@@ -182,15 +202,19 @@ public class Main {
 
     public static void main(String[] args) {
         boolean repeatPrompt;
+        //Generate AIs
         EasyAI easyAI = new EasyAI(characters);
         MediumAI mediumAI = new MediumAI(characters);
         HardAI hardAI = new HardAI(characters);
+        
+        //Repeat until forced to stop
         do {
             repeatPrompt = false;
             initGame();
             printGrid();
             while (!analyzeWinCondition()) {
                 if (moves % 2 == 0) {
+                    //Choose a player
                     if ("user".equalsIgnoreCase(players[0])) {
                         makeAMove('X');
                     } else if ("easy".equalsIgnoreCase(players[0])) {
@@ -207,6 +231,7 @@ public class Main {
                         break;
                     }
                 } else {
+                    //Choose a player
                     if ("user".equalsIgnoreCase(players[1])) {
                         makeAMove('O');
                     } else if ("easy".equalsIgnoreCase(players[1])) {
