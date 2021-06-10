@@ -180,221 +180,11 @@ public class Main {
         characters[linkedList.get(index)] = player;
     }
 
-    public static void mediumAIMove(char player) {
-        int ownRowOccurrences;
-        int opponentRowOccurrences;
-        char opponent;
-        if (player == 'X') {
-            opponent = 'O';
-        } else  {
-            opponent = 'X';
-        }
-        //If AI already has 2 characters in a line, it moves to win
-        for (int i = 0; i < 3; i++) {
-            ownRowOccurrences = 0;
-            for (int j = 0; j < 3; j++) {
-                if (characters[i * 3 + j] == player) {
-                    ownRowOccurrences++;
-                }
-            }
-            if (characters[i] == player && characters[i + 3] == player && characters[i + 6] == ' ') {
-                characters[i + 6] = player;
-                return;
-            } else if (characters[i] == player && characters[i + 6] == player && characters[i + 3] == ' ') {
-                characters[i + 3] = player;
-                return;
-            } else if (characters[i + 3] == player && characters[i + 6] == player && characters[i] == ' ') {
-                characters[i] = player;
-                return;
-            }
-            if (ownRowOccurrences == 2) {
-                for (int j = 0; j < 3; j++) {
-                    if (characters[i * 3 + j] == ' ') {
-                        characters[i * 3 + j] = player;
-                        return;
-                    }
-                }
-            }
-        }
-        if (characters[0] == player && characters[4] == player && characters[8] == ' ') {
-            characters[8] = player;
-            return;
-        } else if (characters[4] == player && characters[8] == player && characters[0] == ' ') {
-            characters[0] = player;
-            return;
-        } else if (characters[2] == player && characters[4] == player && characters[6] == ' ') {
-            characters[6] = player;
-            return;
-        } else if (characters[4] == player && characters[6] == player && characters[2] == ' ') {
-            characters[2] = player;
-            return;
-        } else if (((characters[0] == player && characters[8] == player) || (characters[2] == player && characters[6] == player)) && characters[4] == ' ') {
-            characters[4] = player;
-            return;
-        }
-        //Else if opponent is about to win, AI blocks their move
-        for (int i = 0; i < 3; i++) {
-            opponentRowOccurrences = 0;
-            for (int j = 0; j < 3; j++) {
-                if (characters[i * 3 + j] == opponent) {
-                    opponentRowOccurrences++;
-                }
-            }
-            if (characters[i] == player && characters[i + 3] == opponent && characters[i + 6] == ' ') {
-                characters[i + 6] = player;
-                return;
-            } else if (characters[i] == opponent && characters[i + 6] == opponent && characters[i + 3] == ' ') {
-                characters[i + 3] = player;
-                return;
-            } else if (characters[i + 3] == opponent && characters[i + 6] == opponent && characters[i] == ' ') {
-                characters[i] = player;
-                return;
-            }
-            if (opponentRowOccurrences == 2) {
-                for (int j = 0; j < 3; j++) {
-                    if (characters[i * 3 + j] == ' ') {
-                        characters[i * 3 + j] = player;
-                        return;
-                    }
-                }
-            }
-        }
-        if (characters[0] == opponent && characters[4] == opponent && characters[8] == ' ') {
-            characters[8] = player;
-            return;
-        } else if (characters[4] == opponent && characters[8] == opponent && characters[0] == ' ') {
-            characters[0] = player;
-            return;
-        } else if (characters[2] == opponent && characters[4] == opponent && characters[6] == ' ') {
-            characters[6] = player;
-            return;
-        } else if (characters[4] == opponent && characters[6] == opponent && characters[2] == ' ') {
-            characters[2] = player;
-            return;
-        } else if (((characters[0] == opponent && characters[8] == opponent) || (characters[2] == opponent && characters[6] == opponent)) && characters[4] == ' ') {
-            characters[4] = player;
-            return;
-        }
-        //Otherwise make a random move
-        easyAIMove(player);
-    }
-
-    public static int evaluateMove(char player, char opponent) {
-    //Checking for own win
-        //Checking for rows
-        if (characters[0] == player && characters[1] == player && characters[2] == player) {
-            return 10;
-        } else if (characters[3] == player && characters[4] == player && characters[5] == player) {
-            return 10;
-        } else if (characters[6] == player && characters[7] == player && characters[8] == player) {
-            return 10;
-        } else if (characters[0] == player && characters[3] == player && characters[6] == player) { //Checking for columns
-            return 10;
-        } else if (characters[1] == player && characters[4] == player && characters[7] == player) {
-            return 10;
-        } else if (characters[2] == player && characters[5] == player && characters[8] == player) {
-            return 10;
-        } else if (characters[0] == player && characters[4] == player && characters[8] == player) { //Checking for diagonals
-            return 10;
-        } else if (characters[2] == player && characters[4] == player && characters[6] == player) {
-            return 10;
-        }
-    //Checking for opponent win
-        //Checking for rows
-        if (characters[0] == opponent && characters[1] == opponent && characters[2] == opponent) {
-            return -10;
-        } else if (characters[3] == opponent && characters[4] == opponent && characters[5] == opponent) {
-            return -10;
-        } else if (characters[6] == opponent && characters[7] == opponent && characters[8] == opponent) {
-            return -10;
-        } else if (characters[0] == opponent && characters[3] == opponent && characters[6] == opponent) { //Checking for columns
-            return -10;
-        } else if (characters[1] == opponent && characters[4] == opponent && characters[7] == opponent) {
-            return -10;
-        } else if (characters[2] == opponent && characters[5] == opponent && characters[8] == opponent) {
-            return -10;
-        } else if (characters[0] == opponent && characters[4] == opponent && characters[8] == opponent) { //Checking for diagonals
-            return -10;
-        } else if (characters[2] == opponent && characters[4] == opponent && characters[6] == opponent) {
-            return -10;
-        }
-        return 0;
-    }
-
-    public static boolean isGridFull() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (characters[i * 3 + j] == ' ') {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public static void hardAIMove(char player) {
-        int bestScore = Integer.MIN_VALUE;
-        int bestPosition = -1;
-        char opponent;
-        if (player == 'X') {
-            opponent = 'O';
-        } else  {
-            opponent = 'X';
-        }
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (characters[3 * i + j] == ' ') {
-                    characters[3 * i + j] = player;
-                    int score = minimax(player, 0, false, opponent);
-                    characters[3 * i + j] = ' ';
-                    if (score > bestScore) {
-                        bestScore = score;
-                        bestPosition = 3 * i + j;
-                    }
-                }
-            }
-        }
-        characters[bestPosition] = player;
-    }
-
-    public static int minimax(char player, int recursionLevel, boolean isMaximizer, char opponent) {
-        int result = evaluateMove(player, opponent);
-        if (result == 10 || result == -10) {
-            return result;
-        } else if (isGridFull()) {
-            return 0;
-        }
-        int bestScore;
-        if (isMaximizer) {
-            bestScore = Integer.MIN_VALUE;
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if (characters[3 * i + j] == ' ') {
-                        characters[3 * i + j] = player;
-                        int score = minimax(player, recursionLevel + 1, false, opponent);
-                        characters[3 * i + j] = ' ';
-                        bestScore = Math.max(score, bestScore);
-                    }
-                }
-            }
-        } else {
-            bestScore = Integer.MAX_VALUE;
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if (characters[3 * i + j] == ' ') {
-                        characters[3 * i + j] = opponent;
-                        int score = minimax(player, recursionLevel + 1, true, opponent);
-                        characters[3 * i + j] = ' ';
-                        bestScore = Math.min(score, bestScore);
-                    }
-                }
-            }
-        }
-        return bestScore;
-    }
-
     public static void main(String[] args) {
         boolean repeatPrompt;
+        EasyAI easyAI = new EasyAI(characters);
+        MediumAI mediumAI = new MediumAI(characters);
+        HardAI hardAI = new HardAI(characters);
         do {
             repeatPrompt = false;
             initGame();
@@ -405,13 +195,13 @@ public class Main {
                         makeAMove('X');
                     } else if ("easy".equalsIgnoreCase(players[0])) {
                         System.out.println("Making move level \"easy\"");
-                        easyAIMove('X');
+                        easyAI.makeAMove('X');
                     } else if ("medium".equalsIgnoreCase(players[0])) {
                         System.out.println("Making move level \"medium\"");
-                        mediumAIMove('X');
+                        mediumAI.makeAMove('X');
                     } else if ("hard".equalsIgnoreCase(players[0])) {
                         System.out.println("Making move level \"hard\"");
-                        hardAIMove('X');
+                        hardAI.makeAMove('X');
                     } else {
                         repeatPrompt = true;
                         break;
@@ -421,13 +211,13 @@ public class Main {
                         makeAMove('O');
                     } else if ("easy".equalsIgnoreCase(players[1])) {
                         System.out.println("Making move level \"easy\"");
-                        easyAIMove('O');
+                        easyAI.makeAMove('O');
                     } else if ("medium".equalsIgnoreCase(players[1])) {
                         System.out.println("Making move level \"medium\"");
-                        mediumAIMove('O');
+                        mediumAI.makeAMove('O');
                     } else if ("hard".equalsIgnoreCase(players[1])) {
                         System.out.println("Making move level \"hard\"");
-                        hardAIMove('O');
+                        hardAI.makeAMove('O');
                     } else {
                         repeatPrompt = true;
                         break;
